@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fetch Data from Endpoint</title>
+    </head>
+    <body>
+        <input id="dataTextBox1" class="TextBox" type="text"
+            placeholder="Data will appear here"
+            readonly>
+        <button onclick="getData1()">Get Data</button>
+        <br>
+        <input id="dataTextBox2" class="TextBox" type="text"
+            placeholder="Data will appear here"
+            readonly>
+        <button onclick="getData2()">Get Data</button>
+        <br>
+        <input id="dataTextBox3" class="TextBox" type="text"
+            placeholder="Data will appear here"
+            readonly>
+        <button onclick="getData3()">Get Data</button>
+        <br>
+
+        <input id="dataTextBox4" class="TextBox" type="text"
+            placeholder="Data will appear here"
+            readonly>
+        <button onclick="getData4()">Get Data</button>
+        <br>
+
+        <h1>Download CSV with Progress</h1>
+        <button onclick="downloadCsv1()">Download CSV</button>
+        <progress id="progress1" value="0" max="100"></progress>
+
+        <h1>Download CSV with Progress</h1>
+        <button onclick="downloadCsv2()">Download CSV</button>
+        <progress id="progress2" value="0" max="100"></progress>
+
+        <h1>Download CSV with Progress</h1>
+        <button onclick="downloadCsv3()">Download CSV</button>
+        <progress id="progress3" value="0" max="100"></progress>
+
+        <h1>Download CSV with Progress</h1>
+        <button onclick="downloadCsv4()">Download CSV</button>
+        <progress id="progress4" value="0" max="100"></progress>
+
+        <script src="downloadCsv.js"></script>
+        <script src="getDataAsync.js"></script>
+
+    </body>
+</html>
