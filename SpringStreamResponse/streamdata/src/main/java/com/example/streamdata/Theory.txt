@@ -1,0 +1,2 @@
+StreamingResponseBody type is used for async request processing and
+content can be written directly to the response OutputStream without holding up the threads in the servlet container.
