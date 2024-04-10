@@ -68,4 +68,22 @@ public class StreamOnObject {
         .map(Notes::getTagId)
         .forEach(System.out::println);
   }
+
+  public static void sortByName() {
+    List<Notes> notesList = getNotesList();
+    Comparator<Notes> sortByName = Comparator.comparing(Notes::getName);
+    notesList.stream().sorted(sortByName).forEach(System.out::println);
+  }
+
+  public static void hashmapOFObjects() {
+    List<Notes> notesList = getNotesList();
+
+    notesList.stream()
+        .collect(
+            Collectors.toMap(
+                (eachNote) -> eachNote.id, // keyMapper
+                (eachNote) -> eachNote.getName(), // valueMapper
+                (name1, name2) -> name1 + " " + name2 // merge function based on valueMapper values
+                ));
+  }
 }

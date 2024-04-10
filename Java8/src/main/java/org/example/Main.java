@@ -4,14 +4,17 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
   public static void main(String[] args) {
     System.out.println("Java 8 Stream API");
-    //    List<Integer> numList = Arrays.asList(10, 15, 8, 49, 25, 98, 32, -123);
+    List<Integer> numList = Arrays.asList(10, 15, 8, 49, 25, 98, 32, -123);
 
+    //    Optional.ofNullable(notesList).orElseGet(Collections::emptyList) it is very important to
+    // use optional
     //    printAllEvenNumbersFromList(numList);
     //    System.out.println();
     //    findNumsStartingWithOne(numList);
@@ -19,7 +22,7 @@ public class Main {
     List<Integer> duplicateNumsList = Arrays.asList(10, 1, 5, 15, 10, 45, 32, 45);
     //    printDuplicateElement(duplicateNumsList);
 
-    //    printDuplicateElementUsingMapJava8();
+    printDuplicateElementUsingMapJava8();
 
     //    findFirstElementOfList();
 
@@ -55,11 +58,30 @@ public class Main {
 
   private static void printAllEvenNumbersFromList(List<Integer> numList) {
     System.out.println("Printing all even numbers from list");
+    // predicate can be used directly into the filter as shown !!
+    // Also one more point to be noted that if there exist the single statement  we can directly use
+    // into the function.
+    Predicate<Integer> p1 =
+        (ele) -> {
+          if (ele % 2 == 0) return true;
+          return false;
+        };
+    numList.stream().filter(p1).forEach(even -> System.out.print(even + ", "));
+
     numList.stream().filter(num -> num % 2 == 0).forEach(even -> System.out.print(even + ", "));
   }
 
   private static void findNumsStartingWithOne(List<Integer> numList) {
+    // we can also use this way
+    //    UnaryOperator<Integer> convertToPositive=(element)->{
+    //      if(element<0){
+    //        element=element*(-1);
+    //      }
+    //      return element;
+    //    };
+
     // first get convert numList into stringList
+
     Stream<String> nums = numList.stream().map(num -> num.toString());
 
     // Also we can convert into the stringList like this
@@ -82,6 +104,7 @@ public class Main {
   }
 
   private static void printDuplicateElementUsingSetJava8(List<Integer> numList) {
+    // Approach 1
     Set<Integer> seen = new HashSet<>();
     List<Integer> duplicates = new ArrayList<>();
     for (int i : numList) {
@@ -93,6 +116,7 @@ public class Main {
     }
     duplicates.forEach(duplicate -> System.out.print(duplicate + ", "));
     System.out.println();
+    // Approach 2
     Set<Integer> newSeen = new HashSet<>();
 
     numList.stream()
@@ -129,6 +153,18 @@ public class Main {
         elements.stream()
             .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
+    var countStringMap =
+        elements.stream()
+            .collect(
+                Collectors.toMap(
+                    (ele) -> ele,
+                    ele -> 1,
+                    (oldVal, newVal) -> oldVal + newVal,
+                    LinkedHashMap::new));
+
+    var freqMap2 =
+        elements.stream().collect(Collectors.groupingBy((ele) -> ele, Collectors.counting()));
+
     /*
     We cannot stream on Map directly , first we need to get the Set of entries of map then we can stream into it.
      */
@@ -164,8 +200,8 @@ public class Main {
   }
 
   private static void findFirstNonRepeatedChar() {
+    // We can't apply stream operation on it because it is not chars array.
     String input = " Java stream are  really  jelly helpful ";
-
     /*
     input.chars() gives the IntStream i.e.
     74, 97, 118, 97, 32, 97, 114, 116, 105, 99, 108, 101, 115, 32, 97, 114, 101, 32, 97, 119, 101, 115, 111, 109, 101,
@@ -341,5 +377,26 @@ public class Main {
 
     charArr.entrySet().stream()
         .forEach(entry -> System.out.println(entry.getKey() + ", " + entry.getValue()));
+  }
+
+  private static void convertPrimitiveIntIntoInteger_String() {
+    int[] m1 = {1, 2, 3, 4, 5};
+    // we get the stream for primitive types
+    var sInt = Arrays.stream(m1);
+    // Convert it into Stream<Integer>
+    var sInteger = sInt.boxed();
+    var sInteger2 = sInt.mapToObj((ele) -> Integer.valueOf(ele));
+
+    var sString = sInt.mapToObj((ele) -> String.valueOf(ele));
+    var sString2 = sInt.mapToObj((ele) -> ele + "");
+  }
+
+  private static void concatenateTwoStreamsFlatmap() {
+    List<String> streamList1 = Arrays.asList("Java", "8");
+    List<String> streamList2 = Arrays.asList("explained", "through", "programs");
+
+    Stream<String> concatStream = Stream.concat(streamList1.stream(), streamList2.stream());
+
+    concatStream.forEach(input -> System.out.print(input + " "));
   }
 }

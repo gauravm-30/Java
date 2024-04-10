@@ -16,7 +16,6 @@ public class MapProblems {
     // Create a frequency map using a loop
     Map<Integer, Integer> frequencyMap = new HashMap<>();
     for (Integer element : elements) {
-
       /*          For each element, it checks whether it already exists in the frequencyMap.
       If it exists, it increments the existing count by 1.
       If it doesn’t exist, it initializes the count with 0 and then adds 1.
