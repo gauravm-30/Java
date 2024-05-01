@@ -12,6 +12,7 @@ public class Main {
   public static void main(String[] args) {
     System.out.println("Java 8 Stream API");
     List<Integer> numList = Arrays.asList(10, 15, 8, 49, 25, 98, 32, -123);
+    findMaxChar();
 
     //    Optional.ofNullable(notesList).orElseGet(Collections::emptyList) it is very important to
     // use optional
@@ -19,10 +20,10 @@ public class Main {
     //    System.out.println();
     //    findNumsStartingWithOne(numList);
 
-    List<Integer> duplicateNumsList = Arrays.asList(10, 1, 5, 15, 10, 45, 32, 45);
+    //    List<Integer> duplicateNumsList = Arrays.asList(10, 1, 5, 15, 10, 45, 32, 45);
     //    printDuplicateElement(duplicateNumsList);
 
-    printDuplicateElementUsingMapJava8();
+    //    printDuplicateElementUsingMapJava8();
 
     //    findFirstElementOfList();
 
@@ -53,7 +54,7 @@ public class Main {
     //    findDuplicateElementWithCount();
     //    findMaxElement();
 
-    findCountOfInput();
+    //    findCountOfInput();
   }
 
   private static void printAllEvenNumbersFromList(List<Integer> numList) {
@@ -157,9 +158,10 @@ public class Main {
         elements.stream()
             .collect(
                 Collectors.toMap(
-                    (ele) -> ele,
-                    ele -> 1,
-                    (oldVal, newVal) -> oldVal + newVal,
+                    (ele) -> ele, // key
+                    ele -> 1, // value
+                    (oldVal, newVal) ->
+                        oldVal + newVal, // what to do if same key have different values
                     LinkedHashMap::new));
 
     var freqMap2 =
@@ -398,5 +400,19 @@ public class Main {
     Stream<String> concatStream = Stream.concat(streamList1.stream(), streamList2.stream());
 
     concatStream.forEach(input -> System.out.print(input + " "));
+  }
+
+  private static void findMaxChar() {
+    String input = "elcome to java orld";
+
+    var characterStream =
+        input
+            .toLowerCase()
+            .chars()
+            .mapToObj(ele -> (char) ele)
+            .filter(ch -> !Character.isWhitespace(ch));
+    characterStream
+        .max(Comparator.naturalOrder())
+        .ifPresent((maxChar) -> System.out.println(maxChar));
   }
 }
