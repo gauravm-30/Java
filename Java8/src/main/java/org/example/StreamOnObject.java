@@ -5,30 +5,6 @@ import java.util.stream.Collectors;
 
 public class StreamOnObject {
 
-  public static class Notes {
-    private int id;
-    private String name;
-    private long tagId;
-
-    public Notes(int id, String name, long tagId) {
-      this.id = id;
-      this.name = name;
-      this.tagId = tagId;
-    }
-
-    public int getId() {
-      return id;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public long getTagId() {
-      return tagId;
-    }
-  }
-
   private static List<Notes> getNotesList() {
     return Arrays.asList(
         new Notes(1, "note1", 11),
@@ -85,5 +61,29 @@ public class StreamOnObject {
                 (eachNote) -> eachNote.getName(), // valueMapper
                 (name1, name2) -> name1 + " " + name2 // merge function based on valueMapper values
                 ));
+  }
+
+  public static class Notes {
+    private int id;
+    private String name;
+    private long tagId;
+
+    public Notes(int id, String name, long tagId) {
+      this.id = id;
+      this.name = name;
+      this.tagId = tagId;
+    }
+
+    public int getId() {
+      return id;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public long getTagId() {
+      return tagId;
+    }
   }
 }
