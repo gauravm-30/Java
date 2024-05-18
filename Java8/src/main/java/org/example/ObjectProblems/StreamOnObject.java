@@ -1,4 +1,4 @@
-package org.example;
+package org.example.ObjectProblems;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,6 +17,11 @@ public class StreamOnObject {
 
   public static void convertNotesIntoMap() {
     List<Notes> notes = getNotesList();
+
+    Comparator<Notes> sortByTagId =
+        (note1, note2) -> {
+          return Integer.compare((int) note1.getTagId(), (int) note2.getTagId());
+        };
 
     var noteNameAndTagIdMap =
         notes.stream()

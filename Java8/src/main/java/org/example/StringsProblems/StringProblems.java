@@ -1,6 +1,7 @@
 package org.example.StringsProblems;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.Function;
@@ -125,7 +126,7 @@ public class StringProblems {
         .forEach(entry -> System.out.println(entry.getKey()));
   }
 
-  private static void findCountOfInput() {
+  private static void findCountOfCharactersInInput() {
     String input = "ASKJNFWFWLnldsLWVNWML";
 
     var charArr =
@@ -184,5 +185,56 @@ public class StringProblems {
         };
     long vowels =
         s1.chars().mapToObj(ch -> Character.toLowerCase((char) ch)).filter(isVowels).count();
+  }
+
+  private static void findMaxChar() {
+    String input = "elcome to java orld";
+
+    var characterStream =
+        input
+            .toLowerCase()
+            .chars()
+            .mapToObj(ele -> (char) ele)
+            .filter(ch -> !Character.isWhitespace(ch));
+    characterStream
+        .max(Comparator.naturalOrder())
+        .ifPresent((maxChar) -> System.out.println(maxChar));
+  }
+
+  private static void concatenateTwoStreamsFlatmap() {
+    List<String> streamList1 = Arrays.asList("Java", "8");
+    List<String> streamList2 = Arrays.asList("explained", "through", "programs");
+
+    Stream<String> concatStream = Stream.concat(streamList1.stream(), streamList2.stream());
+
+    concatStream.forEach(input -> System.out.print(input + " "));
+  }
+
+  public static boolean isPalindromeV1(String str) {
+    // Convert the string to lowercase (optional)
+    str = str.toLowerCase();
+
+    int left = 0;
+    int right = str.length() - 1;
+
+    while (left < right) {
+      if (str.charAt(left) != str.charAt(right)) {
+        return false;
+      }
+      left++;
+      right--;
+    }
+    return true;
+  }
+
+  public static boolean isPalindromeV2(String str) {
+    // Convert the string to lowercase (optional)
+    str = str.toLowerCase();
+
+    // Create a reversed version of the string
+    StringBuilder reversed = new StringBuilder(str).reverse();
+
+    // Check if the reversed string is equal to the original string
+    return str.equals(reversed.toString());
   }
 }

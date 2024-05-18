@@ -1,4 +1,4 @@
-package org.example;
+package org.example.IntegerProblems;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -157,7 +157,7 @@ public class Main {
         elements.stream()
             .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
-    var countStringMap =
+    var countIntegerMap =
         elements.stream()
             .collect(
                 Collectors.toMap(
@@ -165,7 +165,7 @@ public class Main {
                     ele -> 1, // value
                     (oldVal, newVal) ->
                         oldVal + newVal, // what to do if same key have different values
-                    LinkedHashMap::new));
+                    () -> new LinkedHashMap<>()));
 
     var freqMap2 =
         elements.stream().collect(Collectors.groupingBy((ele) -> ele, Collectors.counting()));
@@ -243,17 +243,34 @@ public class Main {
         .forEach(ele -> System.out.print(ele + ", "));
   }
 
-  private static void sortAndConvertIntoStream() {
+  private static void sortAscAndConvertIntoStream() {
     int[] elements = {5, 2, 3, 7, 1, 3, 4, 5, 9};
     Arrays.sort(elements);
     Arrays.stream(elements).forEach(ele -> System.out.print(ele + ", "));
   }
 
-  private static void findMaxElement() {
-    int[] arr = {1, 7, 3, 9, 23, 90};
+  private static void sortDescAndConvertIntoStream() {
+    int[] elements = {5, 2, 3, 7, 1, 3, 4, 5, 9};
+    Arrays.stream(elements)
+        .boxed()
+        .sorted(Collections.reverseOrder())
+        .mapToInt(integer -> integer.intValue())
+        .toArray();
+  }
 
-    var maxValue = Arrays.stream(arr).max().getAsInt();
-    System.out.println(maxValue);
+  private static void convertIntegerIntoPrimitiveInt_String() {
+    int[] m1 = {1, 2, 3, 4, 5};
+    // we get the stream for primitive types
+    var sInt = Arrays.stream(m1);
+    // Convert it into Stream<Integer>
+    var sInteger = sInt.boxed();
+    var sInteger2 = sInt.mapToObj((ele) -> Integer.valueOf(ele));
+
+    sInteger2.mapToInt(integer -> integer.intValue()).toArray();
+    sInteger2.mapToInt(Integer::intValue).toArray();
+
+    var sString = sInt.mapToObj((ele) -> String.valueOf(ele));
+    var sString2 = sInt.mapToObj((ele) -> ele + "");
   }
 
   private static void convertPrimitiveIntIntoInteger_String() {
@@ -268,27 +285,11 @@ public class Main {
     var sString2 = sInt.mapToObj((ele) -> ele + "");
   }
 
-  private static void concatenateTwoStreamsFlatmap() {
-    List<String> streamList1 = Arrays.asList("Java", "8");
-    List<String> streamList2 = Arrays.asList("explained", "through", "programs");
+  private static void findMaxElement() {
+    int[] arr = {1, 7, 3, 9, 23, 90};
 
-    Stream<String> concatStream = Stream.concat(streamList1.stream(), streamList2.stream());
-
-    concatStream.forEach(input -> System.out.print(input + " "));
-  }
-
-  private static void findMaxChar() {
-    String input = "elcome to java orld";
-
-    var characterStream =
-        input
-            .toLowerCase()
-            .chars()
-            .mapToObj(ele -> (char) ele)
-            .filter(ch -> !Character.isWhitespace(ch));
-    characterStream
-        .max(Comparator.naturalOrder())
-        .ifPresent((maxChar) -> System.out.println(maxChar));
+    var maxValue = Arrays.stream(arr).max().getAsInt();
+    System.out.println(maxValue);
   }
 
   // **
@@ -298,7 +299,10 @@ public class Main {
   }
 
   private static void sortNumbers() {
-    List<Integer> arr = Arrays.asList(1, 2, 34, 5, 8);
+    List<Integer> arr = Arrays.asList(1, 2, 5, 34, 5, 8);
+
+    List<Integer> arr2 = Arrays.asList(Integer.valueOf(5), Integer.valueOf(10), Integer.valueOf(5));
+
     Comparator<Integer> sortReverseComparator =
         (e1, e2) -> {
           if (Objects.equals(e1, e2)) {
@@ -307,6 +311,20 @@ public class Main {
             return 1;
           } else return -1;
         };
-    arr.stream().sorted(sortReverseComparator).forEach(System.out::println);
+    arr2.stream().sorted(sortReverseComparator).forEach(System.out::println);
+  }
+
+  private static void NthHighestNumber(int index) {
+    List<Integer> arr = Arrays.asList(1, 5, 34, 5, 8);
+    Comparator<Integer> sortReverseComparator =
+        (e1, e2) -> {
+          if (Objects.equals(e1, e2)) {
+            return 0;
+          } else if (e1 < e2) {
+            return 1;
+          } else return -1;
+        };
+    arr.stream().sorted(sortReverseComparator).collect(Collectors.toList()).get(index);
+    // arr.stream().sorted(Collections.reverseOrder()).collect(Collectors.toList()).get(index);
   }
 }

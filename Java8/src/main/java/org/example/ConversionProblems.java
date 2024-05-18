@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 public class ConversionProblems {
 
   // Convert int[] into List<Integer> using java 8 streams
-
   public static void convertIntoList() {
     int[] arr = {1, 2, 3, 4, 5};
 
@@ -24,7 +23,7 @@ public class ConversionProblems {
     System.out.println(integerList.toString());
 
     // converting into primitive integer array
-    int[] integerArr = integerList.stream().mapToInt(ele -> ele).toArray();
+    int[] integerArr = integerList.stream().mapToInt(ele -> ele.intValue()).toArray();
     for (int i = 0; i < integerArr.length; i++) {
       System.out.println(integerArr[i]);
     }
