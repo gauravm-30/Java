@@ -13,9 +13,9 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncService {
 
 @Async
-    public CompletableFuture<ResponseEntity<List<String>>> getCustomerByNameAsync() throws InterruptedException {
+    public CompletableFuture<ResponseEntity<List<String>>> getCustomerByNameAsyncV1() throws InterruptedException {
     System.out.println("ThreadName: Before Sleep "+Thread.currentThread().getName());
-    Thread.sleep(5000);
+    Thread.sleep(10000);
     ResponseEntity<List<String>> customerName= new ResponseEntity<>(Arrays.asList("Gaurav","Sonu","Ashish","Sandeep","Amit"), HttpStatus.OK);
     var m2=CompletableFuture.completedFuture(customerName);
     System.out.println("ThreadName: After sleep "+ Thread.currentThread().getName());
@@ -23,10 +23,30 @@ public class AsyncService {
     return m2;
 }
 
-    public List<String> getCustomerByNameSync() throws InterruptedException {
-        Thread.sleep(5000);
-        System.out.println("ThreadName: "+Thread.currentThread().getName());
+    @Async
+    public CompletableFuture<ResponseEntity<List<String>>> getCustomerByNameAsyncV2() throws InterruptedException {
+        System.out.println("ThreadName: Before Sleep "+Thread.currentThread().getName());
+        Thread.sleep(3000);
+        ResponseEntity<List<String>> customerName= new ResponseEntity<>(Arrays.asList("Gaurav","Sonu","Ashish","Sandeep","Amit"), HttpStatus.OK);
+        var m2=CompletableFuture.completedFuture(customerName);
+        System.out.println("ThreadName: After sleep "+ Thread.currentThread().getName());
+
+        return m2;
+    }
+
+    public List<String> getCustomerByNameSyncV1() throws InterruptedException {
+        System.out.println(" Sync ThreadName: Before Sleep "+Thread.currentThread().getName());
+        Thread.sleep(10000);
         List<String> customerName= Arrays.asList("Gaurav","Sonu","Ashish","Sandeep","Amit");
+        System.out.println("ThreadName: After sleep "+ Thread.currentThread().getName());
+        return (customerName);
+    }
+
+    public List<String> getCustomerByNameSyncV2() throws InterruptedException {
+        System.out.println(" Sync ThreadName: Before Sleep "+Thread.currentThread().getName());
+        Thread.sleep(2000);
+        List<String> customerName= Arrays.asList("Gaurav","Sonu","Ashish","Sandeep","Amit");
+        System.out.println("ThreadName: After sleep "+ Thread.currentThread().getName());
         return (customerName);
     }
 }

@@ -1,0 +1,18 @@
+When you configure your server to accept only one request, it means that the server will process requests sequentially, handling one at a time. Let's break down what happens in your scenario:
+
+1. **Request 1**: The first request arrives, and the server assigns it to a separate thread. This thread processes the request and returns a result after 5 seconds using a `CompletableFuture`.
+
+2. **Request 2**: If another request arrives within those 5 seconds (before the first request completes), the server will still handle it. However, since the server is configured to process requests sequentially, the second request will wait until the first request finishes processing.
+
+3. **Thread Management**: The server will manage threads appropriately. When the first request completes, the thread assigned to it becomes available for handling subsequent requests. The second request will then be processed by this available thread.
+
+In summary, both requests will eventually be completed, but the second request will experience a delay due to waiting for the first request to finish processing. The server ensures that only one request is actively processed at a time, even if multiple requests arrive concurrently. Keep in mind that this behavior depends on your server configuration and how you handle thread management. 😊
+
+If you need further assistance or have additional questions, feel free to ask! 🚀
+
+Source: Conversation with Bing, 18/5/2024
+(1) How can I allow access to a single IP address via Nginx.conf?. https://stackoverflow.com/questions/8438867/how-can-i-allow-access-to-a-single-ip-address-via-nginx-conf.
+(2) Iptables: How to allow only one ip through specific port?. https://serverfault.com/questions/146569/iptables-how-to-allow-only-one-ip-through-specific-port.
+(3) Make Apache server only accept requests to domain rather than IP. https://serverfault.com/questions/742856/make-apache-server-only-accept-requests-to-domain-rather-than-ip.
+(4) Set up and manage access requests - Microsoft Support. https://support.microsoft.com/en-us/office/set-up-and-manage-access-requests-94b26e0b-2822-49d4-929a-8455698654b3.
+(5) undefined. https://mywebsite.com/.
