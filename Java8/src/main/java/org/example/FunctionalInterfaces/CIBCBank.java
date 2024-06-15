@@ -1,6 +1,9 @@
 package org.example.FunctionalInterfaces;
 
 public interface CIBCBank {
+
+  void m3();
+
   default void cibc_m1() {
     System.out.println("Default method m1()");
   }

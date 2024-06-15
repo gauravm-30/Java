@@ -1,7 +1,7 @@
-package org.example.FunctionalInterfaces;
+package org.example.FunctionalInterfaces.staticMethodsProblem;
 
 @FunctionalInterface
-public interface AddFInterface {
+public interface PrintNumFInterface1 {
   void add();
 
   static void printNumbers() {

@@ -62,7 +62,7 @@ public class MapProblems {
     // Traverse through each elements
     for (int i = 0; i < elements.size() - 1; i++) {
       // ignore the element if already visited
-      if (visited[i] == true) continue;
+      if (visited[i]) continue;
 
       int count = 1;
       // Comparing the element with the other next elements

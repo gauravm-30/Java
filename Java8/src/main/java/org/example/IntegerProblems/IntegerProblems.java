@@ -6,20 +6,24 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Main {
+public class IntegerProblems {
   public static void main(String[] args) {
     System.out.println("Java 8 Stream API");
     List<Integer> numList = Arrays.asList(10, 15, 8, 49, 25, 98, 32, -123);
-    sortNumbers();
+
+    //    findValueWithMaxFreq();
+    //    print1To100();
+    //    sortNumbers();
     //    Sorting.runSorting();
     //    ConversionProblems.convertIntoList();
     //    findMaxChar();
 
     //    Optional.ofNullable(notesList).orElseGet(Collections::emptyList) it is very important to
     // use optional
-    //    printAllEvenNumbersFromList(numList);
+    printAllEvenNumbersFromList(numList);
     //    System.out.println();
     //    findNumsStartingWithOne(numList);
 
@@ -61,6 +65,7 @@ public class Main {
   }
 
   private static void printAllEvenNumbersFromList(List<Integer> numList) {
+
     System.out.println("Printing all even numbers from list");
     // predicate can be used directly into the filter as shown !!
     // Also one more point to be noted that if there exist the single statement  we can directly use
@@ -70,7 +75,8 @@ public class Main {
           if (ele % 2 == 0) return true;
           return false;
         };
-    numList.stream().filter(p1).forEach(even -> System.out.print(even + ", "));
+
+    numList.stream().filter(p1).forEach((even) -> System.out.print(even + ", "));
 
     numList.stream().filter(num -> num % 2 == 0).forEach(even -> System.out.print(even + ", "));
   }
@@ -87,7 +93,6 @@ public class Main {
     // first get convert numList into stringList
 
     Stream<String> nums = numList.stream().map(num -> num.toString());
-
     // Also we can convert into the stringList like this
     /*
     String stringList=numList.stream().map(num->num+"");
@@ -99,8 +104,9 @@ public class Main {
     System.out.println();
 
     /*
-    Important :what if numbers consist both positive and negative numbers
+    Important:what if numbers consist both positive and negative numbers
      */
+
     numList.stream()
         .map(num -> num.toString())
         .filter(num -> num.startsWith("1") || num.startsWith("-1"))
@@ -122,7 +128,6 @@ public class Main {
     System.out.println();
     // Approach 2
     Set<Integer> newSeen = new HashSet<>();
-
     numList.stream()
         .filter(num -> !newSeen.add(num))
         .forEach(duplicate -> System.out.print(duplicate + ", "));
@@ -163,8 +168,7 @@ public class Main {
                 Collectors.toMap(
                     (ele) -> ele, // key
                     ele -> 1, // value
-                    (oldVal, newVal) ->
-                        oldVal + newVal, // what to do if same key have different values
+                    (oldVal, newVal) -> oldVal + newVal, // what to do if same key appear again
                     () -> new LinkedHashMap<>()));
 
     var freqMap2 =
@@ -202,6 +206,8 @@ public class Main {
     var maxElement =
         elements.stream().max(Comparator.comparing(element -> Integer.valueOf(element))).get();
     System.out.println(maxElement);
+
+    var maxElement2 = elements.stream().reduce((a, b) -> a > b ? a : b);
   }
 
   private static void sortList() {
@@ -316,6 +322,8 @@ public class Main {
 
   private static void NthHighestNumber(int index) {
     List<Integer> arr = Arrays.asList(1, 5, 34, 5, 8);
+
+    // Since Integer wrapper class in immutable so we can use the Object.equals
     Comparator<Integer> sortReverseComparator =
         (e1, e2) -> {
           if (Objects.equals(e1, e2)) {
@@ -326,5 +334,37 @@ public class Main {
         };
     arr.stream().sorted(sortReverseComparator).collect(Collectors.toList()).get(index);
     // arr.stream().sorted(Collections.reverseOrder()).collect(Collectors.toList()).get(index);
+  }
+
+  private static void findValueWithMaxFreq() {
+    List<Integer> integerList = Arrays.asList(10, 10, 20, 20, 10, 10, 40);
+
+    Map<Integer, Integer> freqMap =
+        integerList.stream()
+            .collect(Collectors.toMap(ele -> ele, ele -> 1, (oldVal, newVal) -> oldVal + newVal));
+    freqMap
+        .entrySet()
+        .forEach(
+            entry ->
+                System.out.println(
+                    "entry key = " + entry.getKey() + " entry value = " + entry.getValue()));
+
+    Set<Map.Entry<Integer, Integer>> entriedSet = freqMap.entrySet();
+
+    Map.Entry<Integer, Integer> maxFreqEntry =
+        entriedSet.stream()
+            .reduce((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? entry1 : entry2)
+            .get();
+
+    System.out.println(
+        "Max freq element is " + maxFreqEntry.getKey() + "  " + maxFreqEntry.getValue());
+  }
+
+  private static void print1To100() {
+    IntStream.range(1, 101).forEach(System.out::println);
+  }
+
+  private static void presentInL1NotInL2() {
+    // stream api to get data present in L1 not in L2;
   }
 }

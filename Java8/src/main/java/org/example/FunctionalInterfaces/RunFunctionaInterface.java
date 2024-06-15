@@ -11,15 +11,19 @@ public class RunFunctionaInterface {
   }
 
   public static void main(String[] args) {
-    DefaultMethodInheritance.createObject();
+    DefaultMethodInheritance.createObjectV2();
     RunFunctionaInterface runFunctionaInterface = new RunFunctionaInterface(10, 20);
 
     int f1 = 23;
     AddFInterface addFInterface =
         () -> {
+          // make the copy of the local variable
+          int f3 = f1;
           System.out.println(age);
           System.out.println(age + 1);
+          // we can't change the local variable value
           System.out.println(f1);
+          System.out.println(f3++);
           System.out.println(runFunctionaInterface.m1);
           runFunctionaInterface.m1 = 30;
           System.out.println(runFunctionaInterface.m1);

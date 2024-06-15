@@ -31,6 +31,12 @@ public class ReduceStream {
     System.out.println("Max value: " + max); // Output: Max value: 30
   }
 
+  private static void findMin() {
+    List<Integer> numbers = Arrays.asList(10, 20, 5, 30, 15);
+    int max = numbers.stream().reduce(Integer.MAX_VALUE, (a, b) -> a > b ? b : a);
+    System.out.println("Max value: " + max); // Output: Max value: 30
+  }
+
   private static void concatenateStrings() {
     List<String> letters = Arrays.asList("a", "b", "c", "d", "e");
     String s1 =
@@ -51,6 +57,7 @@ public class ReduceStream {
 
     List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
     int sum = numbers.stream().reduce(0, (a, b) -> a + b);
+
     System.out.println("Sum: " + sum); // Output: Sum: 15
 
     // OR

@@ -94,7 +94,7 @@ public class StringProblems {
                     stringValue -> stringValue,
                     stringValue -> stringValue.length(),
                     (oldVal, newVal) -> oldVal,
-                    LinkedHashMap::new));
+                    () -> new LinkedHashMap<>()));
 
     countStringMap.entrySet().stream()
         .forEach(entry -> System.out.println(entry.getKey() + " " + entry.getValue()));
@@ -189,6 +189,8 @@ public class StringProblems {
 
   private static void findMaxChar() {
     String input = "elcome to java orld";
+
+    // Use char freq map and then apply reduce operation
 
     var characterStream =
         input

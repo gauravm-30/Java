@@ -53,6 +53,8 @@ public class StreamOnObject {
   public static void sortByName() {
     List<Notes> notesList = getNotesList();
     Comparator<Notes> sortByName = Comparator.comparing(Notes::getName);
+    Comparator<Notes> sortByNameV1 = (note1, note2) -> -(note1.name.compareTo(note1.name));
+
     notesList.stream().sorted(sortByName).forEach(System.out::println);
   }
 
